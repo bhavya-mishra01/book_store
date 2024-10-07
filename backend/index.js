@@ -4,6 +4,9 @@ import mongoose from "mongoose";
 import { Book } from "./models/bookModel.js";
 const app = express();
 
+// middleware for parsing request body
+app.use(express.json());
+
 app.get('/', (request, response) => {
     console.log(request);
     return response.status(234).send("server running");
@@ -28,6 +31,7 @@ app.post('/books', async (request, response) => {
 
         };
         const book=await Book.create(newBook);
+        return response.status(201).send(book);
 
     } catch (error) {
         console.log(error.message);
